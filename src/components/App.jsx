@@ -57,6 +57,29 @@ export class App extends Component {
     );
   };
 
+  componentDidMount() {
+
+    const contacts = localStorage.getItem('contacts');
+    const parsedContacts = JSON.parse(contacts);
+    console.log(parsedContacts);
+    
+    // проверка если что-то есть в контактах, то их отображаем
+    if (parsedContacts) {
+      this.setState({ contacts: parsedContacts });
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    
+//запись в локал сторедж при внесении изменений в контактах
+    if (this.state.contacts !== prevState.contacts) {
+      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+    }
+    };
+  
+
+
+
   render() {
     const filteredContacts = this.getFilteredContacts();
 
